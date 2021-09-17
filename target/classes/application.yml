@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: AlgoService
+
+
+#  config:
+#    import: "optional:consul:"
+#  cloud:
+#    discovery:
+#      enabled: false
+server:
+  servlet:
+    context-path: /algoservice
+  port: 8080
+
