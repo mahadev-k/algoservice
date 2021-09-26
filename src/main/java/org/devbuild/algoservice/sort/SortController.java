@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("sort")
@@ -20,9 +22,11 @@ public class SortController implements SortControllerInterface{
 
     List<Node> currentNodes = new ArrayList<>();
 
+    Map<String,List<Node>> currentNodesMap = new HashMap<>();
+
     @Override
-    public ResponseEntity<List<Node>> getCurrentSortedList() {
-        return ResponseEntity.ok(currentNodes);
+    public ResponseEntity<List<Node>> getCurrentSortedList(String sortId) {
+        return ResponseEntity.ok(currentNodesMap.get(sortId));
     }
 
     @Override
@@ -36,9 +40,9 @@ public class SortController implements SortControllerInterface{
     }
 
     @Override
-    public ResponseEntity<List<Node>> mergeSort(List<Node> nodes, long timeInMills) throws InterruptedException{
+    public ResponseEntity<List<Node>> mergeSort(List<Node> nodes, long timeInMills, String sortId) throws InterruptedException{
 
-        currentNodes = nodes;
+        currentNodesMap.put(sortId, nodes);
 
         Runnable mergeSort = () -> {
             try {
@@ -50,29 +54,32 @@ public class SortController implements SortControllerInterface{
 
         Thread mergeSortThread = new Thread(mergeSort);
 
-        mergeSortThread.run();
+        mergeSortThread.start();
         mergeSortThread.join();
 
+        currentNodesMap.remove(sortId);
         return ResponseEntity.ok(nodes);
     }
 
     @Override
-    public ResponseEntity<List<Node>> heapSort(List<Node> nodes, long timeInMills) throws InterruptedException {
+    public ResponseEntity<List<Node>> heapSort(List<Node> nodes, long timeInMills, String sortId) throws InterruptedException {
 
-        currentNodes = nodes;
+        currentNodesMap.put(sortId, nodes);
 
         sortService.heapSort(nodes, timeInMills);
 
+        currentNodesMap.remove(sortId);
         return ResponseEntity.ok(nodes);
     }
 
     @Override
-    public ResponseEntity<List<Node>> bubbleSort(List<Node> nodes, long timeInMills) throws InterruptedException {
+    public ResponseEntity<List<Node>> bubbleSort(List<Node> nodes, long timeInMills, String sortId) throws InterruptedException {
 
-        currentNodes = nodes;
+        currentNodesMap.put(sortId, nodes);
 
         sortService.bubbleSort(nodes, timeInMills);
 
+        currentNodesMap.remove(sortId);
         return ResponseEntity.ok(nodes);
     }
 

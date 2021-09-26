@@ -13,31 +13,34 @@ import java.util.List;
 @RequestMapping("default/sort")
 public interface SortControllerInterface {
 
-    @GetMapping
-    ResponseEntity<List<Node>> getCurrentSortedList();
+    @GetMapping("/{sortId}")
+    ResponseEntity<List<Node>> getCurrentSortedList(@PathVariable String sortId);
 
     @PostMapping
     ResponseEntity<List<Node>> sort(@RequestBody List<Node> nodes) throws InterruptedException;
 
-    @PostMapping("mergeSort/{timeInMills}")
+    @PostMapping("mergeSort/{timeInMills}/{sortId}")
     ResponseEntity<List<Node>> mergeSort(@RequestBody List<Node> nodes,
                                          @PathVariable
-                                         @Min(value = 0, message = "{timeInMills.lessThanZero}")
+                                         @Min(value = 30, message = "{timeInMills.tooLess}")
                                          @Max(value = 1000, message ="{timeInMills.exceeded}")
-                                                 long timeInMills) throws InterruptedException;
+                                                 long timeInMills,
+                                         @PathVariable String sortId) throws InterruptedException;
 
-    @PostMapping("heapSort/{timeInMills}")
+    @PostMapping("heapSort/{timeInMills}/{sortId}")
     ResponseEntity<List<Node>> heapSort(@RequestBody List<Node> nodes,
                                         @PathVariable
-                                        @Min(value = 0, message = "{timeInMills.lessThanZero}")
+                                        @Min(value = 30, message = "{timeInMills.tooLess}")
                                         @Max(value = 1000, message ="{timeInMills.exceeded}")
-                                                long timeInMills) throws InterruptedException;
+                                                long timeInMills,
+                                        @PathVariable String sortId) throws InterruptedException;
 
-    @PostMapping("bubbleSort/{timeInMills}")
+    @PostMapping("bubbleSort/{timeInMills}/{sortId}")
     ResponseEntity<List<Node>> bubbleSort(@RequestBody List<Node> nodes,
                                           @PathVariable
-                                          @Min(value = 0, message = "{timeInMills.lessThanZero}")
+                                          @Min(value = 30, message = "{timeInMills.tooLess}")
                                           @Max(value = 1000, message ="{timeInMills.exceeded}")
-                                                  long timeInMills) throws InterruptedException;
+                                                  long timeInMills,
+                                          @PathVariable String sortId) throws InterruptedException;
 
 }
