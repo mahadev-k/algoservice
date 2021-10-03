@@ -1,6 +1,5 @@
 package org.devbuild.algoservice.sort;
 
-import org.devbuild.algoservice.dto.Node;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +13,13 @@ import java.util.List;
 public interface SortControllerInterface {
 
     @GetMapping("/{sortId}")
-    ResponseEntity<List<Node>> getCurrentSortedList(@PathVariable String sortId);
+    ResponseEntity<List<SortEl>> getCurrentSortedList(@PathVariable String sortId);
 
     @PostMapping
-    ResponseEntity<List<Node>> sort(@RequestBody List<Node> nodes) throws InterruptedException;
+    ResponseEntity<List<SortEl>> sort(@RequestBody List<SortEl> nodes) throws InterruptedException;
 
     @PostMapping("mergeSort/{timeInMills}/{sortId}")
-    ResponseEntity<List<Node>> mergeSort(@RequestBody List<Node> nodes,
+    ResponseEntity<List<SortEl>> mergeSort(@RequestBody List<SortEl> nodes,
                                          @PathVariable
                                          @Min(value = 30, message = "{timeInMills.tooLess}")
                                          @Max(value = 1000, message ="{timeInMills.exceeded}")
@@ -28,7 +27,7 @@ public interface SortControllerInterface {
                                          @PathVariable String sortId) throws InterruptedException;
 
     @PostMapping("heapSort/{timeInMills}/{sortId}")
-    ResponseEntity<List<Node>> heapSort(@RequestBody List<Node> nodes,
+    ResponseEntity<List<SortEl>> heapSort(@RequestBody List<SortEl> nodes,
                                         @PathVariable
                                         @Min(value = 30, message = "{timeInMills.tooLess}")
                                         @Max(value = 1000, message ="{timeInMills.exceeded}")
@@ -36,7 +35,7 @@ public interface SortControllerInterface {
                                         @PathVariable String sortId) throws InterruptedException;
 
     @PostMapping("bubbleSort/{timeInMills}/{sortId}")
-    ResponseEntity<List<Node>> bubbleSort(@RequestBody List<Node> nodes,
+    ResponseEntity<List<SortEl>> bubbleSort(@RequestBody List<SortEl> nodes,
                                           @PathVariable
                                           @Min(value = 30, message = "{timeInMills.tooLess}")
                                           @Max(value = 1000, message ="{timeInMills.exceeded}")

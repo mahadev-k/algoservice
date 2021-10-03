@@ -10,8 +10,7 @@ public class Node implements Comparable<Node> {
     int data;
     String color;
     int index;
-    Node left = null;
-    Node right = null;
+    String borderColor;
 
     @Override
     public int compareTo(Node o) {

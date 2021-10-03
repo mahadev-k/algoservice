@@ -20,16 +20,16 @@ public class ExceptionControllerAdvice {
     public ResponseEntity<Error> genericException(Exception ex){
 
         var error = new Error();
-        error.setMessage(environment.getProperty("generic.exception").toString());
+        error.setMessage(environment.getProperty("generic.exception"));
 
         return ResponseEntity.badRequest().body(error);
     }
 
-    @ExceptionHandler(SortException.class)
-    public ResponseEntity<Error> genericException(SortException ex){
+    @ExceptionHandler(AlgoServiceException.class)
+    public ResponseEntity<Error> genericException(AlgoServiceException ex){
 
         var error = new Error();
-        error.setMessage(environment.getProperty(ex.getMessage()).toString());
+        error.setMessage(environment.getProperty(ex.getMessage()));
 
         return ResponseEntity.badRequest().body(error);
     }

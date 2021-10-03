@@ -1,6 +1,5 @@
 package org.devbuild.algoservice.sort;
 
-import org.devbuild.algoservice.dto.Node;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ public class SortServiceImpl implements SortService {
 
 
     @Override
-    public List<Node> sort(List<Node> nodes) throws InterruptedException {
+    public List<SortEl> sort(List<SortEl> nodes) throws InterruptedException {
         int start = 0;
         int end = nodes.size() - 1;
 
@@ -23,7 +22,7 @@ public class SortServiceImpl implements SortService {
     }
 
     @Override
-    public void mergeSort(List<Node> nodes, int start, int end, long timeInMills) throws InterruptedException {
+    public void mergeSort(List<SortEl> nodes, int start, int end, long timeInMills) throws InterruptedException {
 
         if (start != end) {
             int mid = (start + end) / 2;
@@ -31,29 +30,29 @@ public class SortServiceImpl implements SortService {
             mergeSort(nodes, mid + 1, end, timeInMills);
             int i = start;
             int j = mid + 1;
-            List<Node> sortedNodes = new ArrayList<>();
+            List<SortEl> sortedSortEls = new ArrayList<>();
             while (i <= mid && j <= end) {
-                Node nodeI = nodes.get(i);
-                Node nodeJ = nodes.get(j);
+                SortEl nodeI = nodes.get(i);
+                SortEl nodeJ = nodes.get(j);
 
                 if (nodeI.lessThan(nodeJ)) {
-                    sortedNodes.add(nodeI);
+                    sortedSortEls.add(nodeI);
                     i++;
                 } else {
-                    sortedNodes.add(nodeJ);
+                    sortedSortEls.add(nodeJ);
                     j++;
                 }
             }
             while (i <= mid) {
-                sortedNodes.add(nodes.get(i));
+                sortedSortEls.add(nodes.get(i));
                 i++;
             }
             while (j <= end) {
-                sortedNodes.add(nodes.get(j));
+                sortedSortEls.add(nodes.get(j));
                 j++;
             }
             for (int k = start; k <= end; k++) {
-                nodes.set(k, sortedNodes.get(k - start));
+                nodes.set(k, sortedSortEls.get(k - start));
             }
         }
 
@@ -62,55 +61,14 @@ public class SortServiceImpl implements SortService {
     }
 
     @Override
-    public void populateNodeData(List<Node> nodes) {
+    public void populateSortElData(List<SortEl> nodes) {
         for (int i = 0; i < nodes.size(); i++) {
             nodes.get(i).setIndex(i);
         }
     }
 
-    @Override
-    public Node createTreeFromArray(List<Node> nodes, int i) {
-        Node result = null;
-
-        if (i < nodes.size()) {
-            nodes.get(i).setLeft(createTreeFromArray(nodes, 2 * i + 1));
-            nodes.get(i).setRight(createTreeFromArray(nodes, 2 * i + 2));
-
-            if (i % 2 == 0) {
-                nodes.get(i).setColor("Blue");
-            } else {
-                nodes.get(i).setColor("Green");
-            }
-
-            result = nodes.get(i);
-        }
-
-        return result;
-    }
-
-    @Override
-    public void swap(Node node1, Node node2, boolean leftRoot) {
-
-        Node leftChild = node1.getLeft();
-        Node rightChild = node1.getRight();
-
-        //root
-        node1.setLeft(node2.getLeft());
-        node1.setRight(node2.getRight());
-
-        if (leftRoot) {
-            //left child
-            node2.setLeft(node1);
-            node2.setRight(rightChild);
-        } else {
-            //right
-            node2.setRight(node1);
-            node2.setLeft(leftChild);
-        }
-    }
-
-    public void swap(List<Node> nodes, int i, int j) throws InterruptedException {
-        Node temp = nodes.get(i);
+    public void swap(List<SortEl> nodes, int i, int j) throws InterruptedException {
+        SortEl temp = nodes.get(i);
         nodes.set(i, nodes.get(j));
         nodes.set(j, temp);
 
@@ -121,30 +79,30 @@ public class SortServiceImpl implements SortService {
     }
 
     @Override
-    public void maxHeap(List<Node> nodes, int i, int n) throws InterruptedException {
+    public void maxHeap(List<SortEl> nodes, int i, int n) throws InterruptedException {
 
         int left = 2 * i + 1;
         int right = 2 * i + 2;
 
-        int greaterNode = i;
+        int greaterSortEl = i;
 
-        if (left < n && nodes.get(greaterNode).lessThan(nodes.get(left))) {
-            greaterNode = left;
+        if (left < n && nodes.get(greaterSortEl).lessThan(nodes.get(left))) {
+            greaterSortEl = left;
         }
 
-        if (right < n && nodes.get(greaterNode).lessThan(nodes.get(right))) {
-            greaterNode = right;
+        if (right < n && nodes.get(greaterSortEl).lessThan(nodes.get(right))) {
+            greaterSortEl = right;
         }
 
-        if(greaterNode != i){
-            swap(nodes, i, greaterNode);
-            maxHeap(nodes, greaterNode, n);
+        if(greaterSortEl != i){
+            swap(nodes, i, greaterSortEl);
+            maxHeap(nodes, greaterSortEl, n);
         }
 
     }
 
     @Override
-    public List<Node> heapSort(List<Node> nodes, long timeInMills) throws InterruptedException {
+    public List<SortEl> heapSort(List<SortEl> nodes, long timeInMills) throws InterruptedException {
 
         this.timeInMills = timeInMills;
 
@@ -165,7 +123,7 @@ public class SortServiceImpl implements SortService {
     }
 
     @Override
-    public void bubbleSort(List<Node> nodes, long timeInMills) throws InterruptedException {
+    public void bubbleSort(List<SortEl> nodes, long timeInMills) throws InterruptedException {
 
         this.timeInMills = timeInMills;
 
