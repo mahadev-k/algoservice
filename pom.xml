@@ -70,14 +70,18 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-maven-plugin</artifactId>
-				<version>3.0.3</version>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.5.5</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
-
-				<!-- Building an executable jar -->
-
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.1.0</version>
@@ -85,7 +89,6 @@
 					<archive>
 						<manifest>
 
-							<!-- give full qualified name of your main class-->
 							<mainClass>org.devbuild.algoservice.AlgoServiceApplication</mainClass>
 
 						</manifest>
