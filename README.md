@@ -1,2 +1,2 @@
-# algoservice
-A Spring Boot application that provides problem solving algorithms over various scenarios. The application currently hosts 3 Sorting algorithms exposed in three endpoints.. Happy Coding!!!
+# Algoservice
+A Spring Boot application that provides problem solving algorithms over various scenarios. The application currently hosts some sorting algorithms and the binary search algorithm. To start the application you can go to AlgoServiceMain.java and run the application... Once the application is running pair it up with dev-ng-build which is the angular stack of the project so as to visualize the algorithms... Happy Coding:)!!!
