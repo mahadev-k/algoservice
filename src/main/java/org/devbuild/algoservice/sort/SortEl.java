@@ -8,7 +8,5 @@ import org.devbuild.algoservice.dto.Node;
 @Setter
 public class SortEl extends Node {
 
-    String color;
-    int index;
 
 }
