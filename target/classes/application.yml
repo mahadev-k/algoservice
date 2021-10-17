@@ -11,5 +11,5 @@ spring:
 server:
   servlet:
     context-path: /algoservice
-  port: ${PORT:8080}
+  port: $PORT
 
